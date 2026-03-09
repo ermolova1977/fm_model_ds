@@ -1,405 +1,639 @@
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ТЗ · Финансовая модель девелоперского проекта</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background-color: #f5f7fb;
-            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
-            line-height: 1.5;
-            color: #1e293b;
-            padding: 2rem 1rem;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15);
-            overflow: hidden;
-            padding: 2.5rem 2rem;
-        }
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            margin-bottom: 0.2rem;
-            color: #0f172a;
-            border-left: 6px solid #2563eb;
-            padding-left: 1.2rem;
-        }
-        h2 {
-            font-size: 1.7rem;
-            font-weight: 500;
-            margin: 2.2rem 0 1rem 0;
-            padding-bottom: 0.4rem;
-            border-bottom: 2px solid #e2e8f0;
-            color: #0f172a;
-        }
-        h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin: 1.8rem 0 0.8rem 0;
-            color: #1e293b;
-        }
-        h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: 1.5rem 0 0.5rem;
-            color: #334155;
-        }
-        p {
-            margin-bottom: 1rem;
-            color: #334155;
-        }
-        .meta {
-            background: #f8fafc;
-            padding: 1.2rem 1.8rem;
-            border-radius: 18px;
-            margin: 1.8rem 0 2.2rem 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            border: 1px solid #e2e8f0;
-        }
-        .meta-item {
-            font-size: 1rem;
-        }
-        .meta-item strong {
-            font-weight: 600;
-            color: #0f172a;
-            min-width: 100px;
-            display: inline-block;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.2rem 0 2rem 0;
-            font-size: 0.95rem;
-            box-shadow: 0 1px 3px 0 #0000000d;
-            border-radius: 14px;
-            overflow: hidden;
-        }
-        th {
-            background-color: #f1f5f9;
-            color: #0f172a;
-            font-weight: 600;
-            text-align: left;
-            padding: 12px 16px;
-            border-bottom: 2px solid #cbd5e1;
-        }
-        td {
-            padding: 10px 16px;
-            border-bottom: 1px solid #e2e8f0;
-            background-color: white;
-        }
-        tr:last-child td {
-            border-bottom: none;
-        }
-        .table-caption {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-top: -1.5rem;
-            margin-bottom: 2rem;
-        }
-        ul, ol {
-            margin: 0.8rem 0 1.4rem 1.8rem;
-        }
-        li {
-            margin-bottom: 0.3rem;
-        }
-        code, .inline-code {
-            background: #f1f5f9;
-            padding: 0.2rem 0.5rem;
-            border-radius: 8px;
-            font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
-            font-size: 0.9em;
-            color: #0f172a;
-            border: 1px solid #e2e8f0;
-        }
-        .sheet-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 0.6rem;
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 20px;
-            border: 1px solid #e2e8f0;
-            margin: 1.2rem 0;
-        }
-        .sheet-item {
-            font-family: monospace;
-            font-size: 0.95rem;
-            background: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 30px;
-            border: 1px solid #cbd5e1;
-            display: inline-block;
-            width: fit-content;
-        }
-        .color-badge {
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            border-radius: 4px;
-            margin-right: 0.4rem;
-            vertical-align: middle;
-        }
-        .color-blue { background-color: #3b82f6; }
-        .color-black { background-color: #1e293b; }
-        .color-green { background-color: #10b981; }
-        .color-orange { background-color: #f97316; }
-        .color-red { background-color: #ef4444; }
-        .flag-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-        .flag-card {
-            background: #fef2f2;
-            border-left: 4px solid #ef4444;
-            padding: 0.8rem 1.2rem;
-            border-radius: 16px;
-        }
-        .flag-card strong {
-            display: block;
-            font-size: 1.1rem;
-            color: #b91c1c;
-        }
-        .note {
-            background: #fffbeb;
-            border-left: 4px solid #f59e0b;
-            padding: 1.2rem 2rem;
-            border-radius: 16px;
-            margin: 1.8rem 0;
-        }
-        hr {
-            border: none;
-            border-top: 2px dashed #cbd5e1;
-            margin: 2.5rem 0;
-        }
-        @media (max-width: 600px) {
-            .container { padding: 1.5rem; }
-            h1 { font-size: 1.8rem; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Финансовая модель девелоперского проекта (Web)</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1, h2, h3 { margin-top: 24px; }
+    .section { border: 1px solid #ccc; padding: 12px; margin-bottom: 16px; }
+    label { display: inline-block; width: 200px; }
+    input, select, textarea { margin: 4px 0; }
+    table { border-collapse: collapse; margin-top: 8px; width: 100%; max-width: 100%; font-size: 12px; }
+    th, td { border: 1px solid #ccc; padding: 4px; text-align: right; }
+    th { background: #f0f0f0; }
+    td.label { text-align: left; }
+    .blue { color: #005bbb; }    /* входные данные */
+    .black { color: #000000; }   /* формулы */
+    .green { color: #006400; }   /* итоги */
+    .orange { color: #ff8c00; }  /* сценарии */
+    .red { color: #b22222; font-weight: bold; } /* ошибки / red flags */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
+    .badge-ok { background: #d4edda; color: #155724; }
+    .badge-bad { background: #f8d7da; color: #721c24; }
+    .small { font-size: 11px; color: #555; }
+    textarea { width: 100%; height: 60px; }
+    .scroll-x { overflow-x: auto; }
+  </style>
 </head>
 <body>
-<div class="container">
-    <h1>ТЕХНИЧЕСКОЕ ЗАДАНИЕ</h1>
-    <h2 style="border-bottom: none; font-weight: 400; margin-top: 0.2rem;">Разработка финансовой модели девелоперского проекта с проектным финансированием</h2>
 
-    <div class="meta">
-        <div class="meta-item"><strong>Версия:</strong> 1.0</div>
-        <div class="meta-item"><strong>Дата:</strong> <em>(заполняется)</em></div>
-        <div class="meta-item"><strong>Заказчик:</strong> <em>(компания девелопера)</em></div>
-        <div class="meta-item"><strong>Исполнитель:</strong> <em>(аналитик / консультант)</em></div>
+<h1>Финансовая модель девелоперского проекта (Web)</h1>
+<p class="small">
+  Упрощённая реализация ТЗ: до 5 очередей, до 5 домов в очереди, 120 месяцев, расчёт продаж, эскроу, долга, базовый ДДС / P&amp;L / Баланс, DSCR, ковенанты и red flags.
+</p>
+
+<!-- 00_Control / 01_Scenarios -->
+<div class="section">
+  <h2>Управление моделью</h2>
+  <div class="grid">
+    <div>
+      <label class="orange"><b>Сценарий</b></label>
+      <select id="scenario" class="orange">
+        <option value="base">Base</option>
+        <option value="conservative">Conservative</option>
+        <option value="aggressive">Aggressive</option>
+      </select><br />
+      <label class="blue">Горизонт (мес)</label>
+      <input type="number" id="horizon" value="120" min="12" max="180" class="blue" />
     </div>
-
-    <!-- 1. Цель -->
-    <h2>1. Цель разработки модели</h2>
-    <p>Цель разработки — создание <strong>универсальной финансовой модели девелоперского проекта</strong>, которая позволит:</p>
-    <ul>
-        <li>моделировать строительство <strong>нескольких очередей проекта</strong>;</li>
-        <li>учитывать <strong>несколько жилых домов внутри каждой очереди</strong>;</li>
-        <li>учитывать <strong>отдельный договор проектного финансирования (PF) для каждой очереди</strong>;</li>
-        <li>рассчитывать <strong>ставку кредитования в зависимости от наполнения эскроу-счетов</strong>;</li>
-        <li>учитывать <strong>временное межэтапное фондирование очередей</strong>;</li>
-        <li>автоматически формировать <strong>модель для банка (Bank View)</strong>;</li>
-        <li>автоматически формировать <strong>управленческую отчетность девелопера</strong>;</li>
-        <li>автоматически формировать <strong>финансовые отчеты проекта (ДДС, P&amp;L, Баланс)</strong>.</li>
-    </ul>
-    <p>Модель должна использоваться для:</p>
-    <ul>
-        <li>внутреннего финансового планирования;</li>
-        <li>переговоров с банками;</li>
-        <li>подготовки инвестиционных решений;</li>
-        <li>контроля финансовой устойчивости проекта.</li>
-    </ul>
-
-    <!-- 2. Общие требования -->
-    <h2>2. Общие требования к модели</h2>
-    <h3>2.1 Формат</h3>
-    <p>Microsoft Excel (.xlsx). На первом этапе модель должна работать <strong>без макросов</strong>.</p>
-
-    <h3>2.2 Горизонт планирования</h3>
-    <p>120 месяцев (10 лет), с возможностью расширения до 180 месяцев (15 лет).</p>
-
-    <h3>2.3 Масштабируемость</h3>
-    <table>
-        <thead><tr><th>Параметр</th><th>Значение</th></tr></thead>
-        <tbody>
-            <tr><td>Очереди проекта</td><td>до 5</td></tr>
-            <tr><td>Дома в очереди</td><td>до 5</td></tr>
-            <tr><td>PF договоры</td><td>отдельный на очередь</td></tr>
-            <tr><td>Сценарии</td><td>Base / Conservative / Aggressive</td></tr>
-        </tbody>
-    </table>
-
-    <!-- 3. Архитектура -->
-    <h2>3. Архитектура модели</h2>
-    <p>Трёхуровневая архитектура:</p>
-    <h3>3.1 CORE MODEL (Developer View)</h3>
-    <p>Реальная экономика проекта: денежные потоки, межэтапное фондирование, запуск со сдвигом, фактическая структура финансирования. Для внутреннего управления.</p>
-    <h3>3.2 POLICY LAYER</h3>
-    <p>Слой трансформации: корректировка по банковским требованиям, исключение внутренних потоков, подготовка bank-view.</p>
-    <h3>3.3 BANK MODEL</h3>
-    <p>Для представления банку: очищенная структура, покрытие, ковенанты, escrow-модель.</p>
-
-    <!-- 4. Структура книги Excel -->
-    <h2>4. Структура книги Excel</h2>
-    <p>Файл должен содержать следующие листы (группы):</p>
-    <div class="sheet-list">
-        <span class="sheet-item">00_Control</span> <span class="sheet-item">01_Scenarios</span> <span class="sheet-item">02_Notes</span> <span class="sheet-item">05_Time_Engine</span>
-        <span class="sheet-item">10_Core_Assumptions</span> <span class="sheet-item">11_KeyRate_Forecast</span> <span class="sheet-item">12_Sber_Rate_Table</span>
-        <span class="sheet-item">13_Sales_Profiles</span> <span class="sheet-item">14_Construction_Profiles</span> <span class="sheet-item">15_Object_Index</span>
-        <span class="sheet-item">20_Masterplan_Buildings</span> <span class="sheet-item">21_Stage_Summary_Input</span> <span class="sheet-item">22_Product_Mix</span>
-        <span class="sheet-item">23_Pricing_Assumptions</span> <span class="sheet-item">30_Core_Sales_Matrix</span> <span class="sheet-item">31_Core_Revenue_Matrix</span>
-        <span class="sheet-item">32_Core_Escrow_Matrix</span> <span class="sheet-item">33_Core_Escrow_Stage</span> <span class="sheet-item">40_Core_Construction_Matrix</span>
-        <span class="sheet-item">41_Core_CAPEX_Buildings</span> <span class="sheet-item">42_Core_Social</span> <span class="sheet-item">43_Core_CAPEX_Stage</span>
-        <span class="sheet-item">50_Core_Interstage_Funding</span> <span class="sheet-item">51_Core_Stage_Cashflow</span> <span class="sheet-item">52_Core_Project_Cashflow</span>
-        <span class="sheet-item">60_Core_PF_Stage1</span> <span class="sheet-item">61_Core_PF_Stage2</span> <span class="sheet-item">62_Core_PF_Stage3</span>
-        <span class="sheet-item">63_Core_PF_Stage4</span> <span class="sheet-item">64_Core_PF_Stage5</span> <span class="sheet-item">65_Core_Rate_Model</span>
-        <span class="sheet-item">66_Core_Interest_Model</span> <span class="sheet-item">70_Core_PnL</span> <span class="sheet-item">71_Core_Balance</span>
-        <span class="sheet-item">72_Core_Cashflow_DDS</span> <span class="sheet-item">73_Core_Returns</span> <span class="sheet-item">80_Bank_Policy</span>
-        <span class="sheet-item">81_Reclassification_Map</span> <span class="sheet-item">82_Bank_Adjustments</span> <span class="sheet-item">90_Bank_Stage1</span>
-        <span class="sheet-item">91_Bank_Stage2</span> <span class="sheet-item">92_Bank_Stage3</span> <span class="sheet-item">93_Bank_Stage4</span>
-        <span class="sheet-item">94_Bank_Stage5</span> <span class="sheet-item">95_Bank_Consolidated</span> <span class="sheet-item">96_Bank_Covenants</span>
-        <span class="sheet-item">97_Bank_Check</span> <span class="sheet-item">120_Audit_Control</span> <span class="sheet-item">121_Audit_Structure</span>
-        <span class="sheet-item">122_Audit_Logic</span> <span class="sheet-item">123_Audit_Bankability</span> <span class="sheet-item">124_Audit_Integrity</span>
-        <span class="sheet-item">125_Audit_Dashboard</span> <span class="sheet-item">130_Dev_Dashboard</span> <span class="sheet-item">131_Bank_Dashboard</span>
-        <span class="sheet-item">132_Investor_Dashboard</span>
+    <div>
+      <label class="blue">Ставка PF базовая, % год</label>
+      <input type="number" id="baseRate" value="12" step="0.1" class="blue" /><br />
+      <label class="blue">Минимальный DSCR</label>
+      <input type="number" id="minDSCR" value="1.2" step="0.05" class="blue" />
     </div>
-
-    <!-- 5. Time Engine -->
-    <h2>5. Time Engine (временной движок)</h2>
-    <p>Единый календарь. Все расчёты используют <strong>номер периода</strong>, а не даты.</p>
-    <table>
-        <thead><tr><th>Period</th><th>Date</th><th>Year</th><th>Month</th></tr></thead>
-        <tbody><tr><td colspan="4" style="text-align:center; color:#64748b;">(пример заполнения)</td></tr></tbody>
-    </table>
-
-    <!-- 6. Masterplan -->
-    <h2>6. Masterplan проекта</h2>
-    <p>Каждый дом — отдельная строка.</p>
-    <table>
-        <thead><tr><th>Stage</th><th>Building</th><th>Start Construction</th><th>End Construction</th><th>Start Sales</th><th>Saleable Area</th><th>Budget</th></tr></thead>
-        <tbody><tr><td colspan="7" style="text-align:center; color:#64748b;">(набор объектов)</td></tr></tbody>
-    </table>
-
-    <!-- 7. Расчет продаж -->
-    <h2>7. Расчет продаж</h2>
-    <p>По профилю продаж (помесячный %).</p>
-    <table>
-        <thead><tr><th>Month</th><th>Sales %</th></tr></thead>
-        <tbody><tr><td>1</td><td>3%</td></tr><tr><td>2</td><td>4%</td></tr><tr><td colspan="2" style="color:#64748b;">...</td></tr></tbody>
-    </table>
-    <p><code>Sales = SaleableArea × SalesProfile</code></p>
-
-    <!-- 8. Escrow модель -->
-    <h2>8. Escrow модель</h2>
-    <p><code>EscrowBalance(t) = EscrowBalance(t-1) + SalesRevenue</code><br>Раскрытие эскроу после ввода дома.</p>
-
-    <!-- 9. Расчет ставки PF -->
-    <h2>9. Расчет ставки PF</h2>
-    <p>Ставка зависит от покрытия: <code>Coverage = (F + 0.5 × F2) / Debt</code>, где F — средства на эскроу, F2 — ипотечные кредиты.</p>
-
-    <!-- 10. Межэтапное финансирование -->
-    <h2>10. Межэтапное финансирование</h2>
-    <p>Временное фондирование: Stage1 → Stage2, Stage2 → Stage3. Эти потоки исключаются из Bank View.</p>
-
-    <!-- 11. Финансовые отчеты девелопера -->
-    <h2>11. Финансовые отчеты девелопера</h2>
-    <h3>11.1 Отчет о движении денежных средств (ДДС)</h3>
-    <table><thead><tr><th>Показатель</th></tr></thead><tbody><tr><td>Продажи</td></tr><tr><td>Раскрытие эскроу</td></tr><tr><td>CAPEX</td></tr><tr><td>Социальная инфраструктура</td></tr><tr><td>Проценты</td></tr><tr><td>Погашение долга</td></tr><tr><td>Чистый денежный поток</td></tr></tbody></table>
-    <h3>11.2 Отчет о прибылях и убытках (P&amp;L)</h3>
-    <table><thead><tr><th>Показатель</th></tr></thead><tbody><tr><td>Выручка</td></tr><tr><td>Себестоимость</td></tr><tr><td>EBITDA</td></tr><tr><td>Проценты</td></tr><tr><td>Прибыль до налога</td></tr><tr><td>Чистая прибыль</td></tr></tbody></table>
-    <h3>11.3 Баланс</h3>
-    <table>
-        <thead><tr><th>Активы</th><th>Пассивы</th></tr></thead>
-        <tbody><tr><td>Cash</td><td>Debt</td></tr><tr><td>Escrow</td><td>Equity</td></tr><tr><td>Construction in progress</td><td>Retained earnings</td></tr></tbody>
-    </table>
-    <p>Баланс должен сходиться: <code>Assets = Liabilities + Equity</code>.</p>
-
-    <!-- 12. Цветовая система -->
-    <h2>12. Цветовая система модели</h2>
-    <table>
-        <thead><tr><th>Цвет</th><th>Значение</th></tr></thead>
-        <tbody>
-            <tr><td><span class="color-badge color-blue"></span> Синий</td><td>входные данные</td></tr>
-            <tr><td><span class="color-badge color-black"></span> Чёрный</td><td>формулы</td></tr>
-            <tr><td><span class="color-badge color-green"></span> Зелёный</td><td>итоговые показатели</td></tr>
-            <tr><td><span class="color-badge color-orange"></span> Оранжевый</td><td>сценарии</td></tr>
-            <tr><td><span class="color-badge color-red"></span> Красный</td><td>ошибки</td></tr>
-        </tbody>
-    </table>
-
-    <!-- 13. Красные флаги (Red Flags) -->
-    <h2>13. Красные флаги (Red Flags)</h2>
-    <div class="flag-grid">
-        <div class="flag-card"><strong>DSCR</strong> &lt; 1.2</div>
-        <div class="flag-card"><strong>Equity ratio</strong> &lt; 20%</div>
-        <div class="flag-card"><strong>Coverage</strong> &lt; 100%</div>
-        <div class="flag-card"><strong>Debt</strong> отрицательный</div>
-        <div class="flag-card"><strong>Sales</strong> превышают площадь</div>
+    <div>
+      <label class="blue">Equity, млн</label>
+      <input type="number" id="equity" value="100" step="1" class="blue" /><br />
+      <label class="blue">Дисконт‑ставка IRR/NPV, %</label>
+      <input type="number" id="discRate" value="15" step="0.5" class="blue" />
     </div>
-
-    <!-- 14. Графики -->
-    <h2>14. Графики</h2>
-    <p>Dashboard содержит графики: продажи, строительство, наполнение эскроу, задолженность, ставка PF, денежный поток.</p>
-
-    <!-- 15. Комментарии к показателям -->
-    <h2>15. Комментарии к показателям</h2>
-    <p>Каждый ключевой показатель должен иметь пояснение. Пример:</p>
-    <div class="note">
-        <strong>DSCR</strong><br>
-        Показатель способности проекта обслуживать долг. Минимальное значение для банковского финансирования — 1.2.
-    </div>
-
-    <!-- 16. Автоматические выводы -->
-    <h2>16. Автоматические выводы</h2>
-    <p>Модель формирует выводы, например: <em>«Проект финансово устойчив. DSCR выше минимального уровня банка. Escrow coverage обеспечивает снижение процентной ставки.»</em></p>
-
-    <!-- 17. Автоматические рекомендации -->
-    <h2>17. Автоматические рекомендации</h2>
-    <p>Генерация рекомендаций: ускорить продажи, перенести запуск очереди, снизить CAPEX, увеличить equity.</p>
-
-    <!-- 18. Model Audit -->
-    <h2>18. Model Audit</h2>
-    <p>Не менее 40 автоматических тестов по группам: Structure, Logic, Debt, Bankability, Integrity.</p>
-
-    <!-- 19. Итоговые показатели -->
-    <h2>19. Итоговые показатели</h2>
-    <ul>
-        <li>IRR проекта</li>
-        <li>IRR девелопера</li>
-        <li>NPV</li>
-        <li>Peak Debt</li>
-        <li>Equity requirement</li>
-        <li>Developer profit</li>
-    </ul>
-
-    <!-- 20. Критерий готовности -->
-    <h2>20. Критерий готовности модели</h2>
-    <p>Модель считается выполненной, если:</p>
-    <ul>
-        <li>автоматически рассчитывает проект минимум из <strong>3 очередей</strong>;</li>
-        <li>формирует <strong>ДДС, P&amp;L и Баланс</strong>;</li>
-        <li>формирует <strong>Bank View</strong>;</li>
-        <li>содержит <strong>Model Audit Layer</strong>;</li>
-        <li>содержит <strong>Dashboard с графиками, red flags и рекомендациями</strong>.</li>
-    </ul>
-
-    <hr>
-    <p style="text-align:right; color:#64748b;">Основание: техническое задание вер. 1.0<br>HTML-представление для GitHub</p>
+  </div>
 </div>
+
+<!-- 05_Time_Engine -->
+<div class="section">
+  <h2>Time Engine (календарь)</h2>
+  <button onclick="buildTimeEngine()">Пересчитать календарь</button>
+  <div class="scroll-x">
+    <table id="timeTable">
+      <thead>
+        <tr>
+          <th>Период</th>
+          <th>Год</th>
+          <th>Месяц</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 20_Masterplan_Buildings -->
+<div class="section">
+  <h2>Masterplan: очереди и дома</h2>
+  <p class="small">
+    До 5 очередей × 5 домов. Площади и бюджеты — во входных данных. Продажи начинаются с месяца Start Sales и распределяются по профилю продаж.
+  </p>
+  <div id="stagesContainer"></div>
+  <button onclick="addDefaultMasterplan()">Заполнить примером</button>
+</div>
+
+<!-- 13_Sales_Profiles -->
+<div class="section">
+  <h2>Профиль продаж (Sales Profile)</h2>
+  <p class="small">
+    Сумма процентов по периодам должна быть 100%. Сценарий влияет на растяжение/сжатие профиля.
+  </p>
+  <table id="salesProfileTable">
+    <thead>
+      <tr>
+        <th>Месяц</th>
+        <th>Sales %</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <button onclick="resetSalesProfile()">Стандартный профиль (24 мес)</button>
+</div>
+
+<!-- Кнопка расчёта -->
+<div class="section">
+  <h2>Расчёт модели</h2>
+  <button onclick="runModel()">Запустить расчёт</button>
+  <span id="calcStatus" class="small"></span>
+</div>
+
+<!-- Итоговые показатели + red flags -->
+<div class="section">
+  <h2>Итоговые показатели и ковенанты</h2>
+  <div class="grid">
+    <div>
+      <table>
+        <tbody>
+          <tr><td class="label green">IRR проекта, %</td><td id="irrProject" class="green">–</td></tr>
+          <tr><td class="label green">NPV проекта, млн</td><td id="npvProject" class="green">–</td></tr>
+          <tr><td class="label green">Peak Debt, млн</td><td id="peakDebt" class="green">–</td></tr>
+          <tr><td class="label green">Equity requirement, млн</td><td id="equityReq" class="green">–</td></tr>
+          <tr><td class="label green">Developer profit, млн</td><td id="devProfit" class="green">–</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tbody>
+          <tr><td class="label black">Макс. Debt / Equity, %</td><td id="ratioDE" class="black">–</td></tr>
+          <tr><td class="label black">Мин. DSCR</td><td id="minDSCRFact" class="black">–</td></tr>
+          <tr><td class="label black">Coverage min, %</td><td id="minCoverage" class="black">–</td></tr>
+          <tr><td class="label black">Средняя ставка PF, %</td><td id="avgRate" class="black">–</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Red Flags</h3>
+      <ul id="redFlagsList" class="small"></ul>
+    </div>
+  </div>
+</div>
+
+<!-- Dashboards: простые таблицы -->
+<div class="section">
+  <h2>Dashboards (упрощённо)</h2>
+  <div class="grid">
+    <div>
+      <h3>Продажи и эскроу</h3>
+      <div class="scroll-x">
+        <table id="salesEscrowTable">
+          <thead>
+            <tr>
+              <th>t</th>
+              <th>Продажи, м²</th>
+              <th>Выручка, млн</th>
+              <th>Эскроу, млн</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <h3>Долг и ставка PF</h3>
+      <div class="scroll-x">
+        <table id="debtRateTable">
+          <thead>
+            <tr>
+              <th>t</th>
+              <th>Debt, млн</th>
+              <th>Ставка PF, %</th>
+              <th>Проценты, млн</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <h3>Cashflow (ДДС)</h3>
+      <div class="scroll-x">
+        <table id="cashflowTable">
+          <thead>
+            <tr>
+              <th>t</th>
+              <th>Inflow, млн</th>
+              <th>Outflow, млн</th>
+              <th>Net CF, млн</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Комментарии и рекомендации -->
+<div class="section">
+  <h2>Комментарии и автоматические рекомендации</h2>
+  <div class="grid">
+    <div>
+      <h3>Комментарии к показателям</h3>
+      <textarea id="kpiComments" readonly>
+DSCR — показатель способности проекта обслуживать долг. Минимально допустимый уровень банка — 1.2.
+Coverage — отношение средств на эскроу и ипотечных кредитов к долгу. При Coverage ≥ 100% возможна скидка к базовой ставке PF.
+      </textarea>
+    </div>
+    <div>
+      <h3>Автоматические выводы</h3>
+      <textarea id="autoConclusions" readonly></textarea>
+    </div>
+    <div>
+      <h3>Рекомендации</h3>
+      <textarea id="autoRecommendations" readonly></textarea>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===================== Вспомогательные ==========================
+const MONTHS_PER_YEAR = 12;
+
+function getNumber(id) {
+  return parseFloat(document.getElementById(id).value) || 0;
+}
+
+function format(num, digits = 2) {
+  if (isNaN(num)) return '–';
+  return num.toFixed(digits);
+}
+
+// ===================== Time Engine ==============================
+function buildTimeEngine() {
+  const horizon = parseInt(document.getElementById('horizon').value) || 120;
+  const tbody = document.querySelector('#timeTable tbody');
+  tbody.innerHTML = '';
+  for (let t = 1; t <= horizon; t++) {
+    const year = Math.floor((t - 1) / MONTHS_PER_YEAR) + 1;
+    const month = ((t - 1) % MONTHS_PER_YEAR) + 1;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${t}</td><td>${year}</td><td>${month}</td>`;
+    tbody.appendChild(tr);
+  }
+}
+buildTimeEngine();
+
+// ===================== Masterplan ==============================
+function createStageBlock(stageIndex) {
+  const div = document.createElement('div');
+  div.className = 'section';
+  div.style.marginBottom = '8px';
+  div.innerHTML = `<h3>Очередь ${stageIndex + 1}</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Дом</th>
+          <th>Start Construction (t)</th>
+          <th>End Construction (t)</th>
+          <th>Start Sales (t)</th>
+          <th>Saleable Area, м²</th>
+          <th>Budget CAPEX, млн</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${[0,1,2,3,4].map(b => `
+          <tr>
+            <td>${b + 1}</td>
+            <td><input class="blue" size="4" data-stage="${stageIndex}" data-building="${b}" data-field="sc" /></td>
+            <td><input class="blue" size="4" data-stage="${stageIndex}" data-building="${b}" data-field="ec" /></td>
+            <td><input class="blue" size="4" data-stage="${stageIndex}" data-building="${b}" data-field="ss" /></td>
+            <td><input class="blue" size="6" data-stage="${stageIndex}" data-building="${b}" data-field="area" /></td>
+            <td><input class="blue" size="6" data-stage="${stageIndex}" data-building="${b}" data-field="capex" /></td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>`;
+  return div;
+}
+
+function initMasterplan() {
+  const container = document.getElementById('stagesContainer');
+  container.innerHTML = '';
+  for (let s = 0; s < 3; s++) { // минимум 3 очереди, как в ТЗ
+    container.appendChild(createStageBlock(s));
+  }
+}
+initMasterplan();
+
+function addDefaultMasterplan() {
+  const inputs = document.querySelectorAll('#stagesContainer input');
+  inputs.forEach(i => i.value = '');
+  // Простая заготовка: 3 очереди по 3 дома
+  const setVal = (s, b, field, val) => {
+    const el = document.querySelector(`input[data-stage="${s}"][data-building="${b}"][data-field="${field}"]`);
+    if (el) el.value = val;
+  };
+  for (let s = 0; s < 3; s++) {
+    for (let b = 0; b < 3; b++) {
+      const baseT = 1 + s * 12 + b * 2;
+      setVal(s, b, 'sc', baseT);
+      setVal(s, b, 'ec', baseT + 12);
+      setVal(s, b, 'ss', baseT + 3);
+      setVal(s, b, 'area', 10000);
+      setVal(s, b, 'capex', 300);
+    }
+  }
+}
+
+// ===================== Sales Profile ===========================
+let salesProfile = []; // [{month, share}]
+
+function resetSalesProfile() {
+  salesProfile = [];
+  const horizonLocal = 24;
+  for (let m = 1; m <= horizonLocal; m++) {
+    // Простой профиль: сначала 3%, потом 4%, хвост 2%
+    let share = 0.03;
+    if (m > 3 && m <= 12) share = 0.04;
+    if (m > 12) share = 0.02;
+    salesProfile.push({ month: m, share: share });
+  }
+  // Нормировка на 100%
+  const sum = salesProfile.reduce((acc, x) => acc + x.share, 0);
+  salesProfile = salesProfile.map(x => ({ month: x.month, share: x.share / sum }));
+  renderSalesProfile();
+}
+resetSalesProfile();
+
+function renderSalesProfile() {
+  const tbody = document.querySelector('#salesProfileTable tbody');
+  tbody.innerHTML = '';
+  salesProfile.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${p.month}</td>
+      <td contenteditable="true" data-month="${p.month}">${(p.share*100).toFixed(2)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.querySelector('#salesProfileTable').addEventListener('input', e => {
+  const cell = e.target;
+  const m = parseInt(cell.getAttribute('data-month'));
+  if (!m) return;
+  const val = parseFloat(cell.textContent) || 0;
+  const idx = salesProfile.findIndex(x => x.month === m);
+  if (idx >= 0) {
+    salesProfile[idx].share = val / 100.0;
+  }
+  // нормировка после правки
+  const sum = salesProfile.reduce((acc, x) => acc + x.share, 0) || 1;
+  salesProfile = salesProfile.map(x => ({ month: x.month, share: x.share / sum }));
+  renderSalesProfile();
+});
+
+// ===================== Основной расчёт =========================
+function runModel() {
+  const horizon = parseInt(document.getElementById('horizon').value) || 120;
+  const scenario = document.getElementById('scenario').value;
+  const baseRate = getNumber('baseRate');
+  const equity = getNumber('equity');
+  const discRate = getNumber('discRate') / 100;
+
+  // 1. Считываем masterplan
+  const buildings = [];
+  const inputs = document.querySelectorAll('#stagesContainer input');
+  inputs.forEach(i => {
+    const s = parseInt(i.getAttribute('data-stage'));
+    const b = parseInt(i.getAttribute('data-building'));
+    const field = i.getAttribute('data-field');
+    const val = parseFloat(i.value) || 0;
+    let obj = buildings.find(x => x.stage === s && x.building === b);
+    if (!obj) {
+      obj = { stage: s, building: b };
+      buildings.push(obj);
+    }
+    obj[field] = val;
+  });
+
+  // 2. Массивы по времени
+  const salesArea = Array(horizon+1).fill(0);      // м²
+  const salesRevenue = Array(horizon+1).fill(0);   // млн
+  const escrow = Array(horizon+1).fill(0);         // млн
+  const debt = Array(horizon+1).fill(0);           // млн
+  const ratePF = Array(horizon+1).fill(0);         // %
+  const interest = Array(horizon+1).fill(0);       // млн
+  const capex = Array(horizon+1).fill(0);          // млн (упрощённо равномерно по стройке)
+  const cfIn = Array(horizon+1).fill(0);           // млн
+  const cfOut = Array(horizon+1).fill(0);          // млн
+  const netCF = Array(horizon+1).fill(0);          // млн
+
+  // 3. Продажи по каждому дому
+  const pricePerM2 = 0.25; // млн за 1000 м² => 250 000 за м², просто пример
+  buildings.forEach(b => {
+    if (!b.area || !b.ss) return;
+    salesProfile.forEach(p => {
+      const t = b.ss + (p.month - 1);
+      if (t >= 1 && t <= horizon) {
+        const areaSold = b.area * p.share;
+        salesArea[t] += areaSold;
+        salesRevenue[t] += areaSold * pricePerM2 / 1000; // пересчёт к млн
+      }
+    });
+    // CAPEX равномерно между sc и ec
+    if (b.sc && b.ec && b.capex) {
+      const duration = Math.max(1, b.ec - b.sc + 1);
+      const perMonth = b.capex / duration;
+      for (let t = b.sc; t <= b.ec && t <= horizon; t++) {
+        if (t >= 1) capex[t] += perMonth;
+      }
+    }
+  });
+
+  // 4. Эскроу: пополнение продажами, раскрытие после ввода дома
+  for (let t = 1; t <= horizon; t++) {
+    escrow[t] = escrow[t-1] + salesRevenue[t];
+    // раскрытие: когда дом введён, вся связанная выручка снимается (упрощённо)
+    buildings.forEach(b => {
+      if (b.ec === t) {
+        // Найдём все продажи этого дома по времени и снимем их с эскроу
+        salesProfile.forEach(p => {
+          const ts = b.ss + (p.month - 1);
+          if (ts >= 1 && ts <= t && ts <= horizon) {
+            const areaSold = b.area * p.share;
+            const rev = areaSold * pricePerM2 / 1000;
+            escrow[t] -= rev;
+            cfIn[t] += rev; // приход на проект от раскрытия
+          }
+        });
+      }
+    });
+    // пополнение эскроу — это пока не CF проекта (деньги у банка), поэтому в ДДС не считаем как inflow
+  }
+
+  // 5. Финансирование (очень упрощённо):
+  // Debt закрывает отрицательный кумулятивный CF до equity.
+  let cumCF = equity; // изначально вносим equity
+  let peakDebt = 0;
+
+  for (let t = 1; t <= horizon; t++) {
+    // Проценты на предыдущий долг
+    const coverage = (escrow[t] + 0.5 * 0 /* ипотека F2 в этой версии 0 */) / (debt[t-1] || 1);
+    // Ставка PF: чем выше coverage, тем ниже ставка (условно)
+    let rateAdj = baseRate;
+    if (coverage >= 1) rateAdj -= 2;
+    if (coverage >= 1.5) rateAdj -= 3;
+    if (scenario === 'conservative') rateAdj += 1;
+    if (scenario === 'aggressive') rateAdj -= 1;
+    ratePF[t] = Math.max(5, rateAdj);
+    interest[t] = debt[t-1] * (ratePF[t] / 100) / 12;
+
+    // Денежные потоки:
+    const inflow = cfIn[t] + salesRevenue[t] * 0; // продажи напрямую не идут в CF, только через эскроу
+    const outflow = capex[t] + interest[t];
+    cfIn[t] += inflow;
+    cfOut[t] += outflow;
+    netCF[t] = inflow - outflow;
+
+    cumCF += netCF[t];
+    if (cumCF < 0) {
+      // Требуется долг
+      const addDebt = -cumCF;
+      debt[t] = debt[t-1] + addDebt;
+      cumCF = 0;
+    } else {
+      // Погашение долга, если есть свободный CF
+      const repay = Math.min(debt[t-1], cumCF);
+      debt[t] = debt[t-1] - repay;
+      cumCF -= repay;
+    }
+    if (debt[t] > peakDebt) peakDebt = debt[t];
+  }
+
+  // 6. ДДС / P&L / Баланс (упрощённо)
+  // Для таблиц используем netCF как чистый денежный поток.
+  // P&L: выручка = раскрытие эскроу (cfIn - прочее), себестоимость = capex, проценты = interest.
+  // Баланс: Cash = cumCF + остатки equity, Debt = debt[t], Escrow = escrow[t], CIP ~ накопленный CAPEX.
+
+  // Заполнение таблиц Dashboard
+  fillDashboards(horizon, salesArea, salesRevenue, escrow, debt, ratePF, interest, cfIn, cfOut, netCF);
+
+  // 7. Итоговые показатели (очень грубые)
+  const irr = calcIRR(netCF.slice(1), equity * -1); // CF проекта с t=1 (equity как outflow в t0)
+  const npv = calcNPV(netCF.slice(1), discRate) + (-equity);
+  const devProfit = netCF.slice(1).reduce((a,b) => a+b, 0) - equity;
+
+  document.getElementById('irrProject').textContent = isNaN(irr) ? '–' : (irr*100).toFixed(2);
+  document.getElementById('npvProject').textContent = format(npv);
+  document.getElementById('peakDebt').textContent = format(peakDebt);
+  document.getElementById('equityReq').textContent = format(equity); // в этой версии = вводимое equity
+  document.getElementById('devProfit').textContent = format(devProfit);
+
+  // DSCR: возьмём как (CF до процентов) / проценты
+  let minDSCRFact = Infinity;
+  let minCoverage = Infinity;
+  let sumDebt = 0, cntDebt = 0, sumRate = 0, cntRate = 0;
+  for (let t = 1; t <= horizon; t++) {
+    const cfBeforeInt = cfIn[t] - capex[t]; // очень грубо
+    const dscr = interest[t] > 0 ? cfBeforeInt / interest[t] : Infinity;
+    const cov = debt[t] > 0 ? (escrow[t]) / debt[t] : Infinity;
+    if (dscr < minDSCRFact) minDSCRFact = dscr;
+    if (cov < minCoverage) minCoverage = cov;
+    if (debt[t] > 0) { sumDebt += debt[t]; cntDebt++; }
+    if (ratePF[t] > 0) { sumRate += ratePF[t]; cntRate++; }
+  }
+  const ratioDE = peakDebt / (equity || 1) * 100;
+  document.getElementById('ratioDE').textContent = format(ratioDE);
+  document.getElementById('minDSCRFact').textContent = isFinite(minDSCRFact) ? minDSCRFact.toFixed(2) : '–';
+  document.getElementById('minCoverage').textContent = isFinite(minCoverage) ? (minCoverage*100).toFixed(0) : '–';
+  document.getElementById('avgRate').textContent = cntRate ? (sumRate/cntRate).toFixed(2) : '–';
+
+  // Red flags
+  const redFlags = [];
+  const minDSCRReq = getNumber('minDSCR');
+  if (minDSCRFact < minDSCRReq) redFlags.push(`DSCR &lt; ${minDSCRReq.toFixed(2)} (факт ${minDSCRFact.toFixed(2)})`);
+  if (ratioDE > 80) redFlags.push(`Equity ratio &lt; 20% (Debt/Equity = ${ratioDE.toFixed(0)}%)`);
+  if (minCoverage < 1) redFlags.push(`Coverage &lt; 100% (факт ${(minCoverage*100).toFixed(0)}%)`);
+  if (peakDebt < 0) redFlags.push('Debt отрицательный (ошибка расчёта)');
+  // Проверка продаж: не превышают площадь (примерно)
+  const totalArea = buildings.reduce((a,b) => a + (b.area||0), 0);
+  const totalSalesArea = salesArea.reduce((a,b) => a + b, 0);
+  if (totalSalesArea - totalArea > 1e-6) {
+    redFlags.push('Sales превышают общую площадь');
+  }
+
+  const ul = document.getElementById('redFlagsList');
+  ul.innerHTML = '';
+  if (redFlags.length === 0) {
+    const li = document.createElement('li');
+    li.innerHTML = '<span class="badge badge-ok">Нет критических флагов</span>';
+    ul.appendChild(li);
+  } else {
+    redFlags.forEach(f => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="badge badge-bad">${f}</span>`;
+      ul.appendChild(li);
+    });
+  }
+
+  // Автоматические выводы и рекомендации
+  const concl = [];
+  if (minDSCRFact >= minDSCRReq) {
+    concl.push('Проект финансово устойчив: DSCR выше минимального уровня банка.');
+  } else {
+    concl.push('Проект не проходит по DSCR: требуется пересмотр структуры финансирования или графика потоков.');
+  }
+  if (minCoverage >= 1) {
+    concl.push('Escrow coverage обеспечивает снижение процентной ставки PF.');
+  } else {
+    concl.push('Escrow coverage ниже 100%, потенциал снижения ставки PF ограничен.');
+  }
+  document.getElementById('autoConclusions').value = concl.join('\n');
+
+  const recs = [];
+  if (minDSCRFact < minDSCRReq) {
+    recs.push('Увеличить equity или растянуть CAPEX по времени для улучшения DSCR.');
+  }
+  if (minCoverage < 1) {
+    recs.push('Ускорить продажи до ввода домов для повышения покрытия эскроу.');
+  }
+  if (ratioDE > 80) {
+    recs.push('Снизить долговую нагрузку или увеличить долю собственных средств.');
+  }
+  if (recs.length === 0) {
+    recs.push('Существенных замечаний нет. Возможна оптимизация профиля продаж и сроков ввода домов.');
+  }
+  document.getElementById('autoRecommendations').value = recs.join('\n');
+
+  document.getElementById('calcStatus').textContent = 'Расчёт выполнен.';
+}
+
+// ===================== Dashboards заполнение ====================
+function fillDashboards(horizon, salesArea, salesRevenue, escrow, debt, ratePF, interest, cfIn, cfOut, netCF) {
+  const tMax = Math.min(horizon, 120);
+
+  const salesTbody = document.querySelector('#salesEscrowTable tbody');
+  const debtTbody = document.querySelector('#debtRateTable tbody');
+  const cfTbody = document.querySelector('#cashflowTable tbody');
+  salesTbody.innerHTML = '';
+  debtTbody.innerHTML = '';
+  cfTbody.innerHTML = '';
+
+  for (let t = 1; t <= tMax; t++) {
+    const tr1 = document.createElement('tr');
+    tr1.innerHTML = `<td>${t}</td><td>${format(salesArea[t],0)}</td><td>${format(salesRevenue[t])}</td><td>${format(escrow[t])}</td>`;
+    salesTbody.appendChild(tr1);
+
+    const tr2 = document.createElement('tr');
+    tr2.innerHTML = `<td>${t}</td><td>${format(debt[t])}</td><td>${format(ratePF[t])}</td><td>${format(interest[t])}</td>`;
+    debtTbody.appendChild(tr2);
+
+    const tr3 = document.createElement('tr');
+    tr3.innerHTML = `<td>${t}</td><td>${format(cfIn[t])}</td><td>${format(cfOut[t])}</td><td>${format(netCF[t])}</td>`;
+    cfTbody.appendChild(tr3);
+  }
+}
+
+// ===================== IRR / NPV ================================
+function calcNPV(cashflows, rate) {
+  let npv = 0;
+  for (let t = 0; t < cashflows.length; t++) {
+    npv += cashflows[t] / Math.pow(1 + rate, (t + 1) / 12);
+  }
+  return npv;
+}
+
+function calcIRR(cashflows, initialOutflow) {
+  const maxIter = 100;
+  let rateLow = -0.9;
+  let rateHigh = 1.0;
+  function npvRate(r) {
+    return initialOutflow + calcNPV(cashflows, r);
+  }
+  for (let i = 0; i < maxIter; i++) {
+    const mid = (rateLow + rateHigh) / 2;
+    const npvMid = npvRate(mid);
+    if (Math.abs(npvMid) < 1e-6) return mid;
+    const npvLow = npvRate(rateLow);
+    if (npvLow * npvMid < 0) {
+      rateHigh = mid;
+    } else {
+      rateLow = mid;
+    }
+  }
+  return (rateLow + rateHigh) / 2;
+}
+</script>
+
 </body>
 </html>
-```
