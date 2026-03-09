@@ -1,0 +1,405 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТЗ · Финансовая модель девелоперского проекта</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f5f7fb;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            line-height: 1.5;
+            color: #1e293b;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15);
+            overflow: hidden;
+            padding: 2.5rem 2rem;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.2rem;
+            color: #0f172a;
+            border-left: 6px solid #2563eb;
+            padding-left: 1.2rem;
+        }
+        h2 {
+            font-size: 1.7rem;
+            font-weight: 500;
+            margin: 2.2rem 0 1rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid #e2e8f0;
+            color: #0f172a;
+        }
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem 0;
+            color: #1e293b;
+        }
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.5rem;
+            color: #334155;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: #334155;
+        }
+        .meta {
+            background: #f8fafc;
+            padding: 1.2rem 1.8rem;
+            border-radius: 18px;
+            margin: 1.8rem 0 2.2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            border: 1px solid #e2e8f0;
+        }
+        .meta-item {
+            font-size: 1rem;
+        }
+        .meta-item strong {
+            font-weight: 600;
+            color: #0f172a;
+            min-width: 100px;
+            display: inline-block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 2rem 0;
+            font-size: 0.95rem;
+            box-shadow: 0 1px 3px 0 #0000000d;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            font-weight: 600;
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 2px solid #cbd5e1;
+        }
+        td {
+            padding: 10px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            background-color: white;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .table-caption {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: -1.5rem;
+            margin-bottom: 2rem;
+        }
+        ul, ol {
+            margin: 0.8rem 0 1.4rem 1.8rem;
+        }
+        li {
+            margin-bottom: 0.3rem;
+        }
+        code, .inline-code {
+            background: #f1f5f9;
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+            font-size: 0.9em;
+            color: #0f172a;
+            border: 1px solid #e2e8f0;
+        }
+        .sheet-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 0.6rem;
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            margin: 1.2rem 0;
+        }
+        .sheet-item {
+            font-family: monospace;
+            font-size: 0.95rem;
+            background: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            border: 1px solid #cbd5e1;
+            display: inline-block;
+            width: fit-content;
+        }
+        .color-badge {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            border-radius: 4px;
+            margin-right: 0.4rem;
+            vertical-align: middle;
+        }
+        .color-blue { background-color: #3b82f6; }
+        .color-black { background-color: #1e293b; }
+        .color-green { background-color: #10b981; }
+        .color-orange { background-color: #f97316; }
+        .color-red { background-color: #ef4444; }
+        .flag-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .flag-card {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 0.8rem 1.2rem;
+            border-radius: 16px;
+        }
+        .flag-card strong {
+            display: block;
+            font-size: 1.1rem;
+            color: #b91c1c;
+        }
+        .note {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1.2rem 2rem;
+            border-radius: 16px;
+            margin: 1.8rem 0;
+        }
+        hr {
+            border: none;
+            border-top: 2px dashed #cbd5e1;
+            margin: 2.5rem 0;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>ТЕХНИЧЕСКОЕ ЗАДАНИЕ</h1>
+    <h2 style="border-bottom: none; font-weight: 400; margin-top: 0.2rem;">Разработка финансовой модели девелоперского проекта с проектным финансированием</h2>
+
+    <div class="meta">
+        <div class="meta-item"><strong>Версия:</strong> 1.0</div>
+        <div class="meta-item"><strong>Дата:</strong> <em>(заполняется)</em></div>
+        <div class="meta-item"><strong>Заказчик:</strong> <em>(компания девелопера)</em></div>
+        <div class="meta-item"><strong>Исполнитель:</strong> <em>(аналитик / консультант)</em></div>
+    </div>
+
+    <!-- 1. Цель -->
+    <h2>1. Цель разработки модели</h2>
+    <p>Цель разработки — создание <strong>универсальной финансовой модели девелоперского проекта</strong>, которая позволит:</p>
+    <ul>
+        <li>моделировать строительство <strong>нескольких очередей проекта</strong>;</li>
+        <li>учитывать <strong>несколько жилых домов внутри каждой очереди</strong>;</li>
+        <li>учитывать <strong>отдельный договор проектного финансирования (PF) для каждой очереди</strong>;</li>
+        <li>рассчитывать <strong>ставку кредитования в зависимости от наполнения эскроу-счетов</strong>;</li>
+        <li>учитывать <strong>временное межэтапное фондирование очередей</strong>;</li>
+        <li>автоматически формировать <strong>модель для банка (Bank View)</strong>;</li>
+        <li>автоматически формировать <strong>управленческую отчетность девелопера</strong>;</li>
+        <li>автоматически формировать <strong>финансовые отчеты проекта (ДДС, P&amp;L, Баланс)</strong>.</li>
+    </ul>
+    <p>Модель должна использоваться для:</p>
+    <ul>
+        <li>внутреннего финансового планирования;</li>
+        <li>переговоров с банками;</li>
+        <li>подготовки инвестиционных решений;</li>
+        <li>контроля финансовой устойчивости проекта.</li>
+    </ul>
+
+    <!-- 2. Общие требования -->
+    <h2>2. Общие требования к модели</h2>
+    <h3>2.1 Формат</h3>
+    <p>Microsoft Excel (.xlsx). На первом этапе модель должна работать <strong>без макросов</strong>.</p>
+
+    <h3>2.2 Горизонт планирования</h3>
+    <p>120 месяцев (10 лет), с возможностью расширения до 180 месяцев (15 лет).</p>
+
+    <h3>2.3 Масштабируемость</h3>
+    <table>
+        <thead><tr><th>Параметр</th><th>Значение</th></tr></thead>
+        <tbody>
+            <tr><td>Очереди проекта</td><td>до 5</td></tr>
+            <tr><td>Дома в очереди</td><td>до 5</td></tr>
+            <tr><td>PF договоры</td><td>отдельный на очередь</td></tr>
+            <tr><td>Сценарии</td><td>Base / Conservative / Aggressive</td></tr>
+        </tbody>
+    </table>
+
+    <!-- 3. Архитектура -->
+    <h2>3. Архитектура модели</h2>
+    <p>Трёхуровневая архитектура:</p>
+    <h3>3.1 CORE MODEL (Developer View)</h3>
+    <p>Реальная экономика проекта: денежные потоки, межэтапное фондирование, запуск со сдвигом, фактическая структура финансирования. Для внутреннего управления.</p>
+    <h3>3.2 POLICY LAYER</h3>
+    <p>Слой трансформации: корректировка по банковским требованиям, исключение внутренних потоков, подготовка bank-view.</p>
+    <h3>3.3 BANK MODEL</h3>
+    <p>Для представления банку: очищенная структура, покрытие, ковенанты, escrow-модель.</p>
+
+    <!-- 4. Структура книги Excel -->
+    <h2>4. Структура книги Excel</h2>
+    <p>Файл должен содержать следующие листы (группы):</p>
+    <div class="sheet-list">
+        <span class="sheet-item">00_Control</span> <span class="sheet-item">01_Scenarios</span> <span class="sheet-item">02_Notes</span> <span class="sheet-item">05_Time_Engine</span>
+        <span class="sheet-item">10_Core_Assumptions</span> <span class="sheet-item">11_KeyRate_Forecast</span> <span class="sheet-item">12_Sber_Rate_Table</span>
+        <span class="sheet-item">13_Sales_Profiles</span> <span class="sheet-item">14_Construction_Profiles</span> <span class="sheet-item">15_Object_Index</span>
+        <span class="sheet-item">20_Masterplan_Buildings</span> <span class="sheet-item">21_Stage_Summary_Input</span> <span class="sheet-item">22_Product_Mix</span>
+        <span class="sheet-item">23_Pricing_Assumptions</span> <span class="sheet-item">30_Core_Sales_Matrix</span> <span class="sheet-item">31_Core_Revenue_Matrix</span>
+        <span class="sheet-item">32_Core_Escrow_Matrix</span> <span class="sheet-item">33_Core_Escrow_Stage</span> <span class="sheet-item">40_Core_Construction_Matrix</span>
+        <span class="sheet-item">41_Core_CAPEX_Buildings</span> <span class="sheet-item">42_Core_Social</span> <span class="sheet-item">43_Core_CAPEX_Stage</span>
+        <span class="sheet-item">50_Core_Interstage_Funding</span> <span class="sheet-item">51_Core_Stage_Cashflow</span> <span class="sheet-item">52_Core_Project_Cashflow</span>
+        <span class="sheet-item">60_Core_PF_Stage1</span> <span class="sheet-item">61_Core_PF_Stage2</span> <span class="sheet-item">62_Core_PF_Stage3</span>
+        <span class="sheet-item">63_Core_PF_Stage4</span> <span class="sheet-item">64_Core_PF_Stage5</span> <span class="sheet-item">65_Core_Rate_Model</span>
+        <span class="sheet-item">66_Core_Interest_Model</span> <span class="sheet-item">70_Core_PnL</span> <span class="sheet-item">71_Core_Balance</span>
+        <span class="sheet-item">72_Core_Cashflow_DDS</span> <span class="sheet-item">73_Core_Returns</span> <span class="sheet-item">80_Bank_Policy</span>
+        <span class="sheet-item">81_Reclassification_Map</span> <span class="sheet-item">82_Bank_Adjustments</span> <span class="sheet-item">90_Bank_Stage1</span>
+        <span class="sheet-item">91_Bank_Stage2</span> <span class="sheet-item">92_Bank_Stage3</span> <span class="sheet-item">93_Bank_Stage4</span>
+        <span class="sheet-item">94_Bank_Stage5</span> <span class="sheet-item">95_Bank_Consolidated</span> <span class="sheet-item">96_Bank_Covenants</span>
+        <span class="sheet-item">97_Bank_Check</span> <span class="sheet-item">120_Audit_Control</span> <span class="sheet-item">121_Audit_Structure</span>
+        <span class="sheet-item">122_Audit_Logic</span> <span class="sheet-item">123_Audit_Bankability</span> <span class="sheet-item">124_Audit_Integrity</span>
+        <span class="sheet-item">125_Audit_Dashboard</span> <span class="sheet-item">130_Dev_Dashboard</span> <span class="sheet-item">131_Bank_Dashboard</span>
+        <span class="sheet-item">132_Investor_Dashboard</span>
+    </div>
+
+    <!-- 5. Time Engine -->
+    <h2>5. Time Engine (временной движок)</h2>
+    <p>Единый календарь. Все расчёты используют <strong>номер периода</strong>, а не даты.</p>
+    <table>
+        <thead><tr><th>Period</th><th>Date</th><th>Year</th><th>Month</th></tr></thead>
+        <tbody><tr><td colspan="4" style="text-align:center; color:#64748b;">(пример заполнения)</td></tr></tbody>
+    </table>
+
+    <!-- 6. Masterplan -->
+    <h2>6. Masterplan проекта</h2>
+    <p>Каждый дом — отдельная строка.</p>
+    <table>
+        <thead><tr><th>Stage</th><th>Building</th><th>Start Construction</th><th>End Construction</th><th>Start Sales</th><th>Saleable Area</th><th>Budget</th></tr></thead>
+        <tbody><tr><td colspan="7" style="text-align:center; color:#64748b;">(набор объектов)</td></tr></tbody>
+    </table>
+
+    <!-- 7. Расчет продаж -->
+    <h2>7. Расчет продаж</h2>
+    <p>По профилю продаж (помесячный %).</p>
+    <table>
+        <thead><tr><th>Month</th><th>Sales %</th></tr></thead>
+        <tbody><tr><td>1</td><td>3%</td></tr><tr><td>2</td><td>4%</td></tr><tr><td colspan="2" style="color:#64748b;">...</td></tr></tbody>
+    </table>
+    <p><code>Sales = SaleableArea × SalesProfile</code></p>
+
+    <!-- 8. Escrow модель -->
+    <h2>8. Escrow модель</h2>
+    <p><code>EscrowBalance(t) = EscrowBalance(t-1) + SalesRevenue</code><br>Раскрытие эскроу после ввода дома.</p>
+
+    <!-- 9. Расчет ставки PF -->
+    <h2>9. Расчет ставки PF</h2>
+    <p>Ставка зависит от покрытия: <code>Coverage = (F + 0.5 × F2) / Debt</code>, где F — средства на эскроу, F2 — ипотечные кредиты.</p>
+
+    <!-- 10. Межэтапное финансирование -->
+    <h2>10. Межэтапное финансирование</h2>
+    <p>Временное фондирование: Stage1 → Stage2, Stage2 → Stage3. Эти потоки исключаются из Bank View.</p>
+
+    <!-- 11. Финансовые отчеты девелопера -->
+    <h2>11. Финансовые отчеты девелопера</h2>
+    <h3>11.1 Отчет о движении денежных средств (ДДС)</h3>
+    <table><thead><tr><th>Показатель</th></tr></thead><tbody><tr><td>Продажи</td></tr><tr><td>Раскрытие эскроу</td></tr><tr><td>CAPEX</td></tr><tr><td>Социальная инфраструктура</td></tr><tr><td>Проценты</td></tr><tr><td>Погашение долга</td></tr><tr><td>Чистый денежный поток</td></tr></tbody></table>
+    <h3>11.2 Отчет о прибылях и убытках (P&amp;L)</h3>
+    <table><thead><tr><th>Показатель</th></tr></thead><tbody><tr><td>Выручка</td></tr><tr><td>Себестоимость</td></tr><tr><td>EBITDA</td></tr><tr><td>Проценты</td></tr><tr><td>Прибыль до налога</td></tr><tr><td>Чистая прибыль</td></tr></tbody></table>
+    <h3>11.3 Баланс</h3>
+    <table>
+        <thead><tr><th>Активы</th><th>Пассивы</th></tr></thead>
+        <tbody><tr><td>Cash</td><td>Debt</td></tr><tr><td>Escrow</td><td>Equity</td></tr><tr><td>Construction in progress</td><td>Retained earnings</td></tr></tbody>
+    </table>
+    <p>Баланс должен сходиться: <code>Assets = Liabilities + Equity</code>.</p>
+
+    <!-- 12. Цветовая система -->
+    <h2>12. Цветовая система модели</h2>
+    <table>
+        <thead><tr><th>Цвет</th><th>Значение</th></tr></thead>
+        <tbody>
+            <tr><td><span class="color-badge color-blue"></span> Синий</td><td>входные данные</td></tr>
+            <tr><td><span class="color-badge color-black"></span> Чёрный</td><td>формулы</td></tr>
+            <tr><td><span class="color-badge color-green"></span> Зелёный</td><td>итоговые показатели</td></tr>
+            <tr><td><span class="color-badge color-orange"></span> Оранжевый</td><td>сценарии</td></tr>
+            <tr><td><span class="color-badge color-red"></span> Красный</td><td>ошибки</td></tr>
+        </tbody>
+    </table>
+
+    <!-- 13. Красные флаги (Red Flags) -->
+    <h2>13. Красные флаги (Red Flags)</h2>
+    <div class="flag-grid">
+        <div class="flag-card"><strong>DSCR</strong> &lt; 1.2</div>
+        <div class="flag-card"><strong>Equity ratio</strong> &lt; 20%</div>
+        <div class="flag-card"><strong>Coverage</strong> &lt; 100%</div>
+        <div class="flag-card"><strong>Debt</strong> отрицательный</div>
+        <div class="flag-card"><strong>Sales</strong> превышают площадь</div>
+    </div>
+
+    <!-- 14. Графики -->
+    <h2>14. Графики</h2>
+    <p>Dashboard содержит графики: продажи, строительство, наполнение эскроу, задолженность, ставка PF, денежный поток.</p>
+
+    <!-- 15. Комментарии к показателям -->
+    <h2>15. Комментарии к показателям</h2>
+    <p>Каждый ключевой показатель должен иметь пояснение. Пример:</p>
+    <div class="note">
+        <strong>DSCR</strong><br>
+        Показатель способности проекта обслуживать долг. Минимальное значение для банковского финансирования — 1.2.
+    </div>
+
+    <!-- 16. Автоматические выводы -->
+    <h2>16. Автоматические выводы</h2>
+    <p>Модель формирует выводы, например: <em>«Проект финансово устойчив. DSCR выше минимального уровня банка. Escrow coverage обеспечивает снижение процентной ставки.»</em></p>
+
+    <!-- 17. Автоматические рекомендации -->
+    <h2>17. Автоматические рекомендации</h2>
+    <p>Генерация рекомендаций: ускорить продажи, перенести запуск очереди, снизить CAPEX, увеличить equity.</p>
+
+    <!-- 18. Model Audit -->
+    <h2>18. Model Audit</h2>
+    <p>Не менее 40 автоматических тестов по группам: Structure, Logic, Debt, Bankability, Integrity.</p>
+
+    <!-- 19. Итоговые показатели -->
+    <h2>19. Итоговые показатели</h2>
+    <ul>
+        <li>IRR проекта</li>
+        <li>IRR девелопера</li>
+        <li>NPV</li>
+        <li>Peak Debt</li>
+        <li>Equity requirement</li>
+        <li>Developer profit</li>
+    </ul>
+
+    <!-- 20. Критерий готовности -->
+    <h2>20. Критерий готовности модели</h2>
+    <p>Модель считается выполненной, если:</p>
+    <ul>
+        <li>автоматически рассчитывает проект минимум из <strong>3 очередей</strong>;</li>
+        <li>формирует <strong>ДДС, P&amp;L и Баланс</strong>;</li>
+        <li>формирует <strong>Bank View</strong>;</li>
+        <li>содержит <strong>Model Audit Layer</strong>;</li>
+        <li>содержит <strong>Dashboard с графиками, red flags и рекомендациями</strong>.</li>
+    </ul>
+
+    <hr>
+    <p style="text-align:right; color:#64748b;">Основание: техническое задание вер. 1.0<br>HTML-представление для GitHub</p>
+</div>
+</body>
+</html>
+```
